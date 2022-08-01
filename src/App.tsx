@@ -4,10 +4,7 @@ import { Navbar } from './components/Navbar'
 import routes from './routes'
 
 function App() {
-	//** Test */
-
 	const myRoutes = useRoutes(routes)
-	console.log(import.meta.env.VITE_API_URL)
 	return (
 		<div className="App">
 			<Navbar />
@@ -23,7 +20,7 @@ function App() {
 					overflow: 'auto'
 				}}
 			>
-				<Container maxWidth="lg" sx={{ mt: 4, height: '100%', mb: 4 }}>
+				<Container maxWidth="lg" sx={{ height: '100%' }}>
 					{myRoutes}
 				</Container>
 			</Box>

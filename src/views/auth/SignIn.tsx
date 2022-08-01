@@ -1,7 +1,45 @@
-import { Box, Button, Divider, TextField, Typography } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Divider, TextField, Typography } from '@mui/material'
+import { useFormik } from 'formik'
+import { Link, useNavigate } from 'react-router-dom'
+import * as Yup from 'yup'
+import auth from '../../services/auth'
+import LoadingButton from '@mui/lab/LoadingButton'
+import { useAuth } from '../../hooks/use.auth'
 
+interface Values {
+	email: string
+	password: string
+}
+const SignInSchema = Yup.object().shape({
+	password: Yup.string().required('This Field is required'),
+	email: Yup.string()
+		.email('This Field is not a valid email')
+		.required('This field is required')
+})
 export const SignIn = () => {
+	const { signIn } = useAuth()
+	const navigate = useNavigate()
+	const handleOnSubmit = async (
+		values: Values,
+		{ setSubmitting }: { setSubmitting: (val: boolean) => void }
+	) => {
+		setSubmitting(true)
+		try {
+			setSubmitting(false)
+			await signIn(values)
+			navigate('/')
+		} catch (e) {
+			setSubmitting(false)
+			console.error(e)
+		}
+	}
+
+	const formik = useFormik({
+		initialValues: { email: '', password: '' },
+		onSubmit: handleOnSubmit,
+		validationSchema: SignInSchema
+	})
+
 	return (
 		<Box
 			sx={{
@@ -19,36 +57,51 @@ export const SignIn = () => {
 				Please, fill the following information
 			</Typography>
 
-			<TextField
-				margin="normal"
-				required
-				fullWidth
-				id="email"
-				label="Email Address"
-				name="email"
-				autoComplete="email"
-				autoFocus
-			/>
-			<TextField
-				margin="normal"
-				required
-				fullWidth
-				name="password"
-				label="Password"
-				type="password"
-				id="password"
-				autoComplete="current-password"
-			/>
+			<form onSubmit={formik.handleSubmit}>
+				<TextField
+					margin="normal"
+					fullWidth
+					defaultValue={formik.values.email}
+					error={formik.touched.email && formik.errors.email ? true : false}
+					helperText={formik.touched.email && formik.errors.email}
+					id="email"
+					label="Email Address"
+					name="email"
+					autoComplete="email"
+					onBlur={formik.handleBlur}
+					onChange={formik.handleChange}
+				/>
 
-			<Button
-				size={'large'}
-				fullWidth
-				variant="contained"
-				sx={{ mt: 2 }}
-				disableElevation
-			>
-				Go
-			</Button>
+				<TextField
+					margin="normal"
+					fullWidth
+					error={
+						formik.touched.password && formik.errors.password ? true : false
+					}
+					helperText={formik.touched.password && formik.errors.password}
+					defaultValue={formik.values.password}
+					name="password"
+					label="Password"
+					type="password"
+					id="password"
+					onBlur={formik.handleBlur}
+					onChange={formik.handleChange}
+					autoComplete="current-password"
+				/>
+
+				<LoadingButton
+					size={'large'}
+					fullWidth
+					type="submit"
+					variant="contained"
+					sx={{ mt: 2 }}
+					disableElevation
+					loading={formik.isSubmitting}
+				>
+					Go
+				</LoadingButton>
+			</form>
+
 			<Divider sx={{ mt: 2, mb: 2 }} />
 
 			<Typography
