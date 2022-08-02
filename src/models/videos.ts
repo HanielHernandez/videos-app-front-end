@@ -1,13 +1,9 @@
+import { CreateVideoValues } from './create-video-values'
 import { User } from './user'
 
-export interface Video {
+export interface Video extends CreateVideoValues {
 	id: number
-	url: string
-	title: string
-	description: string
 	published: boolean
-	miniature: string
-	publishedById: number | null
 	publishedBy: User
 	createdAt: Date
 	updatedAt: Date

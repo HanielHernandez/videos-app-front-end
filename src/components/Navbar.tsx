@@ -65,7 +65,11 @@ export const Navbar = () => {
 						spacing={4}
 					>
 						<Grid item>
-							<Typography variant="h6">Me-Tube</Typography>
+							<Link to="/">
+								<Typography sx={{ color: '#fff' }} variant="h6">
+									Me-Tube
+								</Typography>
+							</Link>
 						</Grid>
 
 						{user != null ? (

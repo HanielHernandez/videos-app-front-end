@@ -5,10 +5,10 @@ export const SETTINGS = [
 	},
 	{
 		text: 'My Videos',
-		path: '/me'
+		path: '/videos/me'
 	},
 	{
 		text: 'Home',
-		path: '/me'
+		path: '/'
 	}
 ]

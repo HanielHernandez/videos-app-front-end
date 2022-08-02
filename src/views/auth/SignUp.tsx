@@ -14,6 +14,7 @@ import auth from '../../services/auth'
 import * as Yup from 'yup'
 import { AuthSignUpRequest } from '../../services/auth.request'
 import { useState } from 'react'
+import { SnackbarValues } from '../../models/snackbar-values'
 
 const SignUpSchema = Yup.object().shape({
 	name: Yup.string().required('This Field is required'),
@@ -22,12 +23,6 @@ const SignUpSchema = Yup.object().shape({
 		.email('This Field is not a valid email')
 		.required('This field is required')
 })
-
-interface SnackbarValues {
-	open: boolean
-	message: string
-	type: AlertColor
-}
 
 export const SignUp = () => {
 	const [snackbarState, setSnackBarState] = useState<SnackbarValues>({
