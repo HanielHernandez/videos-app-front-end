@@ -1,4 +1,4 @@
-import { Box, Fab } from '@mui/material'
+import { Box, Fab, IconButton } from '@mui/material'
 import { styled } from '@mui/system'
 
 export const CustomVideoPlayer = styled('video')({
@@ -12,10 +12,4 @@ export const CustomVideoPlayer = styled('video')({
 export const VideoPublisher = styled(Box)({
 	display: 'flex',
 	padding: '1rem 0 '
-})
-
-export const EditVideoButton = styled(Fab)({
-	position: 'absolute',
-	top: '1rem',
-	right: '1rem'
 })

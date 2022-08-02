@@ -38,6 +38,7 @@ const converParamsQueryString = (params: VideosPaginationParams) => {
 
 export const videosApiSlice = createApi({
 	reducerPath: 'videos',
+	tagTypes: ['videos'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: import.meta.env.VITE_API_URL,
 
@@ -55,7 +56,8 @@ export const videosApiSlice = createApi({
 					return `${VIDEOS_ENDPOINT_URL}/${converParamsQueryString(
 						paramsPagiantion
 					)}`
-				}
+				},
+				providesTags: ['videos']
 			}
 		),
 		getVideo: builder.query<Video, string>({
@@ -68,14 +70,23 @@ export const videosApiSlice = createApi({
 				url: '/videos',
 				method: 'POST',
 				body: video
-			})
+			}),
+			invalidatesTags: ['videos']
+		}),
+		publishVideo: builder.mutation<Video, number>({
+			query: (id) => ({
+				url: `/videos/${id}/publish`,
+				method: 'POST'
+			}),
+			invalidatesTags: ['videos']
 		}),
 		updateVideo: builder.mutation<Video, UpdateVideoValues>({
 			query: (updateValues) => ({
 				url: `/videos/${updateValues.id}`,
 				method: 'put',
 				body: updateValues
-			})
+			}),
+			invalidatesTags: ['videos']
 		})
 	})
 })
@@ -83,5 +94,6 @@ export const {
 	useGetVideosQuery,
 	useUpdateVideoMutation,
 	useCreateVideoMutation,
+	usePublishVideoMutation,
 	useGetVideoQuery
 } = videosApiSlice
