@@ -42,8 +42,7 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 		[user]
 	)
 
-	const onSearchFormSubmit = (val: React.FormEventHandler<HTMLFormElement>) => {
-		console.log(val)
+	const onSearchFormSubmit = (event: React.FormEvent) => {
 		//navigate(`/videos?${values.search}`)
 	}
 
