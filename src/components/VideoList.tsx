@@ -55,12 +55,15 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 
 	return (
 		<Grid container sx={{ mt: 0, py: 3, justifyItems: 'flex-start' }}>
-			{(isFetching || updatingVideo) &&
-				Array.from(Array(12).keys()).map((i, index) => (
-					<Grid key={`skeleton-${index}`} item xs={12} md={4} lg={3}>
-						<VideoListItemPlaceholder />
-					</Grid>
-				))}
+			{(isFetching || updatingVideo) && (
+				<Grid container xs={12} spacing={3}>
+					{Array.from(Array(12).keys()).map((i, index) => (
+						<Grid key={`skeleton-${index}`} item xs={12} md={4} lg={3}>
+							<VideoListItemPlaceholder />
+						</Grid>
+					))}
+				</Grid>
+			)}
 			{!isFetching && !updatingVideo && data && (
 				<Grid container xs={12} spacing={3}>
 					{data.items.length == 0 && (
