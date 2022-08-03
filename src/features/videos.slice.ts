@@ -1,3 +1,4 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { PaginationResponse, Video } from '../models'
@@ -100,3 +101,22 @@ export const {
 	useLikeVideoMutation,
 	useGetVideoQuery
 } = videosApiSlice
+
+interface VideoSearchState {
+	search: null | string
+}
+const videoSearchInitialState: VideoSearchState = {
+	search: null
+}
+
+export const videoSearchSlice = createSlice({
+	name: 'videoSearch',
+	initialState: videoSearchInitialState,
+	reducers: {
+		setSearch: (state, { payload }: PayloadAction<string>) => {
+			state.search = payload
+		}
+	}
+})
+export const { setSearch } = videoSearchSlice.actions
+export const videoSearch = videoSearchSlice.reducer

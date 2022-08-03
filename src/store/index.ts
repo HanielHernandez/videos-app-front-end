@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from '../features/auth.slice'
 import { usersApiSlice } from '../features'
-import { videosApiSlice } from '../features/videos.slice'
+import { videosApiSlice, videoSearch } from '../features/videos.slice'
 
 const store = configureStore({
 	reducer: {
 		auth: authSlice,
 		[videosApiSlice.reducerPath]: videosApiSlice.reducer,
-		[usersApiSlice.reducerPath]: usersApiSlice.reducer
+		[usersApiSlice.reducerPath]: usersApiSlice.reducer,
+		videoSearch
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(
