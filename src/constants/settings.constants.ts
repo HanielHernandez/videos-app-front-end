@@ -12,3 +12,14 @@ export const SETTINGS = [
 		path: '/'
 	}
 ]
+
+export const drawerWidth = '240px'
+
+export const sidebarLinks = [
+	{
+		to: '/',
+		text: 'All videos'
+	},
+	{ to: '/videos/me', text: 'My Videos' },
+	{ to: '/videos/following', text: 'Following Videos' }
+]

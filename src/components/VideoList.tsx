@@ -8,13 +8,15 @@ import { VideoListItemPlaceholder } from './VideoListItemPlaceHolder'
 
 interface Props {
 	userId?: number
+	forUser?: number
 }
-export const VideoList: FC<Props> = ({ userId }) => {
+export const VideoList: FC<Props> = ({ userId, forUser }) => {
 	const { user } = useAuth()
 	const { snackbarState, setSnackBarState } = useSnackBar()
 	const { data, isFetching } = useGetVideosQuery({
 		page: 1,
 		perPage: 20,
+		...(forUser && { forUser }),
 		...(userId && { userId })
 	})
 	const [updatingVideo, setUpdatingVideo] = useState(false)

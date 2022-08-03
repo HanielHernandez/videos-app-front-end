@@ -25,6 +25,9 @@ const converParamsQueryString = (params: VideosPaginationParams) => {
 	if (params.userId) {
 		queryString += `&userId=${params.userId}`
 	}
+	if (params.forUser) {
+		queryString += `&userId=${params.forUser}`
+	}
 
 	if (params.orderBy) {
 		if (params.orderBy.field)

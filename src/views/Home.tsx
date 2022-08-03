@@ -1,6 +1,6 @@
 import { VideoList } from '../components'
 
 export const Home = () => {
-	return <VideoList></VideoList>
+	return <VideoList />
 }
 export default Home

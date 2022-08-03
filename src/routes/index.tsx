@@ -7,6 +7,7 @@ import { RequiresAuth, RequiresNoAuth } from './guards/RequiresAuth'
 import { videosRoutes } from './videos'
 import { MyProfile } from '../views/Me'
 import { Id } from '../views/creators/Id'
+import { Navigate } from 'react-router-dom'
 export const routes = [
 	{
 		path: 'auth',
@@ -45,11 +46,7 @@ export const routes = [
 	},
 	{
 		path: '/',
-		element: (
-			<RequiresAuth>
-				<Home />
-			</RequiresAuth>
-		)
+		element: <Navigate replace to="/videos/all" />
 	}
 ]
 export default routes
