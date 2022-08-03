@@ -6,7 +6,7 @@ import { useGetUserQuery } from '../features'
 import { useAuth } from '../hooks/use.auth'
 export const MyProfile = () => {
 	const { user } = useAuth()
-	const { data: userProfile, isLoading } = useGetUserQuery(
+	const { data: userProfile } = useGetUserQuery(
 		user == null ? skipToken : user.id
 	)
 

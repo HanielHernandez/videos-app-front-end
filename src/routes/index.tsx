@@ -1,6 +1,4 @@
-import { Children } from 'react'
 import { Auth } from '../views/auth/Index'
-import Home from '../views/Home'
 import { authRoutes } from './auth'
 import { RequiresAuth, RequiresNoAuth } from './guards/RequiresAuth'
 import { videosRoutes } from './videos'

@@ -1,4 +1,3 @@
-import { ViewAgenda } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import {
 	CardContent,
@@ -47,8 +46,8 @@ const getUpdateValuesFromVideo = (video: Video) => {
 }
 
 export const VideoForm: FC<Props> = ({ mode, video }) => {
-	const [createVideo, { error: createError }] = useCreateVideoMutation()
-	const [updateVideo, { error: updateError }] = useUpdateVideoMutation()
+	const [createVideo] = useCreateVideoMutation()
+	const [updateVideo] = useUpdateVideoMutation()
 	const navigate = useNavigate()
 	const [snackbarState, setSnackBarState] = useState<SnackbarValues>({
 		open: false,
@@ -91,14 +90,6 @@ export const VideoForm: FC<Props> = ({ mode, video }) => {
 		validationSchema,
 		onSubmit: handleOnSubmit
 	})
-	// if (id) {
-	// 	const { data: video, isLoading } = useGetVideoQuery(id)
-	// 	useEffect(() => {
-	// 		if (video) {
-	// 			formik.setValues(video)
-	// 		}
-	// 	}, [video])
-	// }
 
 	return (
 		<Card variant="outlined">

@@ -1,20 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-	buildCreateApi,
-	createApi,
-	fetchBaseQuery
-} from '@reduxjs/toolkit/query/react'
 
 import { User } from '../models/user'
-import { AuthSignInRequest } from '../services/auth.request'
 import { RootState } from '../store'
-import { Auth } from '../views/auth/Index'
 interface AuthState {
 	user: User | null
-}
-interface AuthSigInResponse {
-	user: User
-	accessToken: string
 }
 
 const initialState = (): AuthState => {

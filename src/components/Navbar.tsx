@@ -1,6 +1,5 @@
 import {
 	AppBar,
-	Container,
 	Toolbar,
 	Typography,
 	Button,
@@ -27,23 +26,12 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 	const userAvatar = useRef(null)
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
-
-	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
-
-	const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorElNav(event.currentTarget)
-	}
 	const handleOpenUserMenu = () => {
 		setIsMenuOpen(!isMenuOpen)
 	}
 
-	const handleCloseNavMenu = () => {
-		setAnchorElNav(null)
-	}
-
 	const handleCloseUserMenu = () => {
-		setAnchorElUser(null)
+		setIsMenuOpen(false)
 	}
 	const avatarUrL = useMemo(
 		() =>

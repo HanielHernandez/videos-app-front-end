@@ -2,7 +2,6 @@ import { Box, Divider, TextField, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import auth from '../../services/auth'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { useAuth } from '../../hooks/use.auth'
 

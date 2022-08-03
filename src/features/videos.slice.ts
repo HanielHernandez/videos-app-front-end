@@ -1,17 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { PaginationParams, PaginationResponse, Video } from '../models'
+import { PaginationResponse, Video } from '../models'
 import { CreateVideoValues } from '../models/create-video-values'
 import { UpdateVideoValues } from '../models/update-video-values'
 import { VideosPaginationParams } from '../models/videos-pagination-params'
 import { VIDEOS_ENDPOINT_URL } from '../services/constants'
-
-const initialState = {
-	page: 1,
-	perPage: 10,
-	items: []
-}
 
 const converParamsQueryString = (params: VideosPaginationParams) => {
 	let queryString = '?'

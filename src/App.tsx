@@ -1,13 +1,3 @@
-import {
-	Box,
-	Container,
-	Drawer,
-	List,
-	ListItem,
-	ListItemText,
-	ListItemButton,
-	Toolbar
-} from '@mui/material'
 import { useState } from 'react'
 import { useRoutes, Link, useLocation, Outlet } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
