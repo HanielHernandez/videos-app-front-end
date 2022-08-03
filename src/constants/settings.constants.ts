@@ -1,15 +1,7 @@
 export const SETTINGS = [
 	{
-		text: 'My Profile',
+		text: 'Edit my  Profile',
 		path: '/me'
-	},
-	{
-		text: 'My Videos',
-		path: '/videos/me'
-	},
-	{
-		text: 'Home',
-		path: '/'
 	}
 ]
 
@@ -17,9 +9,9 @@ export const drawerWidth = '240px'
 
 export const sidebarLinks = [
 	{
-		to: '/',
+		to: '/videos',
 		text: 'All videos'
 	},
 	{ to: '/videos/me', text: 'My Videos' },
-	{ to: '/videos/following', text: 'Following Videos' }
+	{ to: '/videos/following', text: 'Following Creators Videos' }
 ]

@@ -1,6 +1,7 @@
 import {
 	Avatar,
 	Card,
+	CardActionArea,
 	CardHeader,
 	CardMedia,
 	IconButton,
@@ -16,7 +17,8 @@ import { Video } from '../models'
 import { getDaysFromNow } from '../utils'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import CreateIcon from '@mui/icons-material/Create'
-import PublishIcon from '@mui/icons-material/Publish'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import React from 'react'
 import { usePublishVideoMutation } from '../features/videos.slice'
 interface Props {
@@ -58,13 +60,13 @@ export const VideoListItem: FC<Props> = ({
 		}
 	}
 	return (
-		<Link to={`/videos/${video.id}`}>
-			<Card
-				variant="outlined"
-				sx={{
-					position: 'relative'
-				}}
-			>
+		<Card
+			variant="outlined"
+			sx={{
+				position: 'relative'
+			}}
+		>
+			<CardActionArea component={Link} to={`/videos/${video.id}`}>
 				<CardMedia
 					component="img"
 					height="150"
@@ -76,22 +78,27 @@ export const VideoListItem: FC<Props> = ({
 						<Typography
 							variant="body1"
 							sx={{
+								display: '-webkit-box',
+								WebkitLineClamp: '2',
+								WebkitBoxOrient: 'vertical',
 								fontWeight: 'medium',
-								display: 'block',
 								maxHeight: '48px',
 								overflow: 'hidden',
 								whiteSpace: 'normal',
 								textOverflow: 'ellipsis'
 							}}
 						>
-							{' '}
 							{video.title}
 						</Typography>
 					}
 					subheader={getDaysFromNow(video.createdAt)}
 					avatar={
 						<Tooltip title={video.publishedBy.name}>
-							<Avatar src={video.publishedBy.photoURL} />
+							<Avatar
+								component={Link}
+								to={`/creators/${video.publishedById}`}
+								src={video.publishedBy.photoURL}
+							/>
 						</Tooltip>
 					}
 					action={
@@ -127,19 +134,24 @@ export const VideoListItem: FC<Props> = ({
 											</Typography>
 										</MenuItem>
 									</Link>
-									{video.published == false && (
-										<MenuItem
-											onClick={(event) => {
-												event.preventDefault()
-												handlePublishVideo(video.id)
-											}}
-										>
-											<ListItemIcon>
-												<PublishIcon />
-											</ListItemIcon>
-											<Typography variant="inherit">Publish Video</Typography>
-										</MenuItem>
-									)}
+
+									<MenuItem
+										onClick={(event) => {
+											event.preventDefault()
+											handlePublishVideo(video.id)
+										}}
+									>
+										<ListItemIcon>
+											{video.published ? (
+												<VisibilityOffIcon />
+											) : (
+												<VisibilityIcon />
+											)}
+										</ListItemIcon>
+										<Typography variant="inherit">
+											{video.published ? 'Unpublish' : 'Publish'} Video
+										</Typography>
+									</MenuItem>
 
 									<MenuItem onClick={handleClose}>Remove Video</MenuItem>
 								</Menu>
@@ -149,7 +161,7 @@ export const VideoListItem: FC<Props> = ({
 						)
 					}
 				/>
-			</Card>
-		</Link>
+			</CardActionArea>
+		</Card>
 	)
 }

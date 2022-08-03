@@ -6,20 +6,21 @@ import { User } from '../models'
 
 interface Props {
 	user: User
-	isSubscribed?: boolean
-	onSubscribed: () => void
+	disableSubscribe?: boolean
+	onSubscribed?: () => void
 }
 
 export const UserProfile: FC<Props> = ({
 	user,
-	isSubscribed,
-	onSubscribed
+	onSubscribed,
+	disableSubscribe
 }) => {
 	const [followUser, { isLoading: isFollowing }] = useFollowUserMutation()
 	const handleOnFollowUser = async () => {
 		try {
 			await followUser(user.id).unwrap()
-			onSubscribed()
+
+			onSubscribed ? onSubscribed() : {}
 		} catch (e) {
 			console.error(e)
 		}
@@ -52,20 +53,22 @@ export const UserProfile: FC<Props> = ({
 					</Typography>
 				}
 				action={
-					<LoadingButton
-						sx={{
-							marginTop: 1,
-							marginRight: 1,
-							marginBottom: 1
-						}}
-						loading={isFollowing}
-						color={user.subscribed != null ? 'inherit' : 'primary'}
-						onClick={() => handleOnFollowUser()}
-						variant={'contained'}
-						disableElevation
-					>
-						{user.subscribed != null ? 'Subscribed' : 'Subscribe'}
-					</LoadingButton>
+					!disableSubscribe && (
+						<LoadingButton
+							sx={{
+								marginTop: 1,
+								marginRight: 1,
+								marginBottom: 1
+							}}
+							loading={isFollowing}
+							color={user.subscribed != null ? 'inherit' : 'primary'}
+							onClick={() => handleOnFollowUser()}
+							variant={'contained'}
+							disableElevation
+						>
+							{user.subscribed != null ? 'Subscribed' : 'Subscribe'}
+						</LoadingButton>
+					)
 				}
 			/>
 		</Card>

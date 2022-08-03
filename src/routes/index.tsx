@@ -1,16 +1,16 @@
 import { Children } from 'react'
 import { Auth } from '../views/auth/Index'
 import Home from '../views/Home'
-import { Videos } from '../views/videos/Index'
 import { authRoutes } from './auth'
 import { RequiresAuth, RequiresNoAuth } from './guards/RequiresAuth'
 import { videosRoutes } from './videos'
 import { MyProfile } from '../views/Me'
 import { Id } from '../views/creators/Id'
 import { Navigate } from 'react-router-dom'
+import Videos from '../views/videos/Index'
 export const routes = [
 	{
-		path: 'auth',
+		path: '/auth',
 		children: authRoutes,
 		element: (
 			<RequiresNoAuth>
@@ -21,7 +21,7 @@ export const routes = [
 	{
 		path: '/videos',
 		children: videosRoutes,
-		Element: (
+		element: (
 			<RequiresAuth>
 				<Videos />
 			</RequiresAuth>
@@ -35,7 +35,6 @@ export const routes = [
 			</RequiresAuth>
 		)
 	},
-
 	{
 		path: '/creators/:id',
 		element: (
@@ -46,7 +45,7 @@ export const routes = [
 	},
 	{
 		path: '/',
-		element: <Navigate replace to="/videos/all" />
+		element: <Navigate to="videos" />
 	}
 ]
 export default routes

@@ -65,13 +65,7 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 					alignItems="center"
 					spacing={4}
 				>
-					<Grid
-						item
-						direction="row"
-						alignItems="center"
-						sx={{ flexWrap: 'nowrap' }}
-						xs={6}
-					>
+					<Grid item alignItems="center" sx={{ flexWrap: 'nowrap' }} xs={6}>
 						<IconButton
 							color="inherit"
 							aria-label="open drawer"

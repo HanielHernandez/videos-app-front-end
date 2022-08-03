@@ -15,14 +15,14 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 	const { snackbarState, setSnackBarState } = useSnackBar()
 	const { data, isFetching } = useGetVideosQuery({
 		page: 1,
-		perPage: 20,
+		perPage: 30,
 		...(forUser && { forUser }),
 		...(userId && { userId })
 	})
 	const [updatingVideo, setUpdatingVideo] = useState(false)
 
 	const onVideoUpdated = (success?: boolean) => {
-		setUpdatingVideo(!updatingVideo)
+		setUpdatingVideo(success == undefined ? true : false)
 
 		if (success == true) {
 			setSnackBarState({
@@ -51,7 +51,9 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 						<VideoListItemPlaceholder />
 					</Grid>
 				))}
-			{data &&
+			{!isFetching &&
+				!updatingVideo &&
+				data &&
 				data.items.map((video) => (
 					<Grid key={video.id} item xs={12} md={4} lg={3}>
 						<VideoListItem

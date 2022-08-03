@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom'
 import { All } from '../views/videos/All'
 import { EditVideo } from '../views/videos/EditVIdeo'
 import { FollowingVideos } from '../views/videos/Following'
@@ -15,16 +16,18 @@ export const videosRoutes = [
 		element: <MyVideos />
 	},
 	{
-		path: 'all',
+		path: '',
+		index: true,
 		element: <All />
 	},
+
 	{
 		path: 'new',
 		element: <NewVideo />
 	},
 	{
 		path: 'following',
-		Element: <FollowingVideos />
+		element: <FollowingVideos />
 	},
 	{
 		path: ':id/edit',

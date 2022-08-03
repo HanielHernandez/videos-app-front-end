@@ -12,12 +12,14 @@ import { drawerWidth, sidebarLinks } from '../constants/settings.constants'
 
 interface Props {
 	open: boolean
+	onClose?: () => void
 }
-export const Sidebar: FC<Props> = ({ open }) => {
+export const Sidebar: FC<Props> = ({ open, onClose }) => {
 	return (
 		<>
 			<Drawer
 				variant="temporary"
+				onClose={onClose}
 				sx={{
 					display: {
 						xs: 'block',

@@ -12,7 +12,12 @@ export const DefaultLayout: FC<Props> = ({ children, withSidebar }) => {
 	return (
 		<>
 			<Navbar handleDrawerToggle={() => setIsDrawerOpen(!isDrawerOpen)} />
-			{withSidebar && <Sidebar open={isDrawerOpen} />}
+			{withSidebar && (
+				<Sidebar
+					onClose={() => setIsDrawerOpen(!isDrawerOpen)}
+					open={isDrawerOpen}
+				/>
+			)}
 			<Box
 				component="main"
 				sx={{
