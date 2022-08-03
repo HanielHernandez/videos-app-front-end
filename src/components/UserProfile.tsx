@@ -1,11 +1,23 @@
 import { LoadingButton } from '@mui/lab'
-import { Avatar, Card, CardHeader, Grid, Typography } from '@mui/material'
-import { FC } from 'react'
+import {
+	Avatar,
+	Card,
+	CardHeader,
+	Grid,
+	Typography,
+	TypographyPropsVariantOverrides
+} from '@mui/material'
+import { FC, useMemo } from 'react'
+import {
+	userCardConf,
+	videoUserCardConf
+} from '../constants/settings.constants'
 import { useFollowUserMutation } from '../features'
 import { User } from '../models'
 
 interface Props {
 	user: User
+	isForVideo?: boolean
 	disableSubscribe?: boolean
 	onSubscribed?: () => void
 }
@@ -13,6 +25,7 @@ interface Props {
 export const UserProfile: FC<Props> = ({
 	user,
 	onSubscribed,
+	isForVideo,
 	disableSubscribe
 }) => {
 	const [followUser, { isLoading: isFollowing }] = useFollowUserMutation()
@@ -26,17 +39,35 @@ export const UserProfile: FC<Props> = ({
 		}
 	}
 
+	const {
+		cardVariant,
+		headerPadding,
+		subHeaderVariation,
+		avatarSize,
+		titleVariation
+	} = useMemo(() => {
+		return isForVideo ? videoUserCardConf : userCardConf
+	}, [isForVideo])
+
 	return (
 		<Card
-			variant="outlined"
-			sx={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+			variant={cardVariant}
+			sx={{
+				boxShadow: 'none',
+				borderTopLeftRadius: 0,
+				borderTopRightRadius: 0
+			}}
 		>
 			<CardHeader
-				avatar={<Avatar sx={{ width: 56, height: 56 }} src={user.photoURL} />}
+				sx={{
+					px: headerPadding
+				}}
+				avatar={<Avatar sx={avatarSize} src={user.photoURL} />}
 				title={
 					<Typography
-						variant="h5"
+						variant={titleVariation}
 						sx={{
+							color: '#191919',
 							fontWeight: 'medium',
 							display: 'block',
 							overflow: 'hidden',
@@ -48,7 +79,7 @@ export const UserProfile: FC<Props> = ({
 					</Typography>
 				}
 				subheader={
-					<Typography variant="subtitle1" sx={{ color: '#757575' }}>
+					<Typography variant={subHeaderVariation} sx={{ color: '#757575' }}>
 						{user.followers} Followers
 					</Typography>
 				}

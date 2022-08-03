@@ -18,6 +18,7 @@ import { CustomVideoPlayer, VideoPublisher } from './VideoPlayer.style'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 import { useFollowUserMutation, useLikeVideoMutation } from '../features'
 import { Link } from 'react-router-dom'
+import { UserProfile } from './UserProfile'
 interface Props {
 	video: Video
 	onVideoLiked: () => void
@@ -97,7 +98,7 @@ export const VideoPlayer: FC<Props> = ({ video, onVideoLiked }) => {
 					<CardContent>
 						<Divider />
 
-						<VideoPublisher>
+						{/* <VideoPublisher>
 							<Link to={`/creators/${video.publishedById}`}>
 								<Avatar src={video.publishedBy.photoURL} sx={{ mr: 2 }} />
 							</Link>
@@ -113,7 +114,13 @@ export const VideoPlayer: FC<Props> = ({ video, onVideoLiked }) => {
 							>
 								Subscribe
 							</LoadingButton>
-						</VideoPublisher>
+						</VideoPublisher> */}
+						<UserProfile
+							isForVideo
+							user={video.publishedBy}
+							onSubscribed={() => onVideoLiked()}
+						/>
+
 						<Typography variant="body1">{video.description}</Typography>
 					</CardContent>
 				</Card>
