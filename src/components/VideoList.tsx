@@ -1,8 +1,9 @@
-import { Alert, Grid, Skeleton, Snackbar } from '@mui/material'
+import { Alert, Grid, Skeleton, Snackbar, Typography } from '@mui/material'
 import { FC, useState } from 'react'
 import { useGetVideosQuery } from '../features/videos.slice'
 import { useSnackBar } from '../hooks/use-snack-bar'
 import { useAuth } from '../hooks/use.auth'
+import { Video } from '../models'
 import { VideoListItem } from './VideoListItem'
 import { VideoListItemPlaceholder } from './VideoListItemPlaceHolder'
 
@@ -54,7 +55,7 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 			{!isFetching &&
 				!updatingVideo &&
 				data &&
-				data.items.map((video) => (
+				data.items.map((video: Video) => (
 					<Grid key={video.id} item xs={12} md={4} lg={3}>
 						<VideoListItem
 							onVideoUpdated={onVideoUpdated}
@@ -63,6 +64,16 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 						/>
 					</Grid>
 				))}
+
+			{!isFetching && !updatingVideo && data && data.items.length == 0 && (
+				<Grid item xs={12}>
+					{' '}
+					<Typography variant="h5" align="center">
+						No vidoes found
+					</Typography>
+				</Grid>
+			)}
+
 			<Snackbar
 				anchorOrigin={{
 					vertical: 'top',

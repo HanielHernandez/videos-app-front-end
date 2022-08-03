@@ -34,20 +34,22 @@ export const SignUp = () => {
 
 	const handleOnSubmit = async (
 		values: AuthSignUpRequest,
-		{ setSubmitting }: { setSubmitting: (val: boolean) => void }
+		{ setSubmitting, resetForm }: any
 	) => {
 		setSubmitting(true)
 		try {
-			const response = await auth.signUp(values)
+			await auth.signUp(values)
 			setSubmitting(false)
-			console.log(response)
-			formik.resetForm()
+			resetForm()
 			setSnackBarState({
 				open: true,
 				type: 'success',
 				message: 'Account created successfully'
 			})
-			navigate('/auth/signin')
+
+			setTimeout(() => {
+				navigate('/auth/signin')
+			}, 3000)
 		} catch (e) {
 			setSubmitting(false)
 			setSnackBarState({
