@@ -51,13 +51,16 @@ function App() {
 				<Toolbar />
 				<List>
 					{sidebarLinks.map((link, index) => (
-						<Link to={link.to} key={`link-${index}`}>
-							<ListItem disablePadding>
-								<ListItemButton>
-									<ListItemText primary={link.text} />
-								</ListItemButton>
-							</ListItem>
-						</Link>
+						<ListItem
+							component={Link}
+							to={link.to}
+							key={`link-${index}`}
+							disablePadding
+						>
+							<ListItemButton>
+								<ListItemText primary={link.text} />
+							</ListItemButton>
+						</ListItem>
 					))}
 				</List>
 			</Drawer>
