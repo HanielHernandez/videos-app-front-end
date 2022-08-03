@@ -1,9 +1,18 @@
-import { Alert, Grid, Skeleton, Snackbar, Typography } from '@mui/material'
+import {
+	Alert,
+	Grid,
+	Skeleton,
+	Snackbar,
+	Typography,
+	Pagination,
+	Stack
+} from '@mui/material'
 import { FC, useState } from 'react'
 import { useGetVideosQuery } from '../features/videos.slice'
 import { useSnackBar } from '../hooks/use-snack-bar'
 import { useAuth } from '../hooks/use.auth'
 import { Video } from '../models'
+import { VideosPaginationParams } from '../models/videos-pagination-params'
 import { VideoListItem } from './VideoListItem'
 import { VideoListItemPlaceholder } from './VideoListItemPlaceHolder'
 
@@ -14,12 +23,16 @@ interface Props {
 export const VideoList: FC<Props> = ({ userId, forUser }) => {
 	const { user } = useAuth()
 	const { snackbarState, setSnackBarState } = useSnackBar()
-	const { data, isFetching } = useGetVideosQuery({
-		page: 1,
-		perPage: 30,
-		...(forUser && { forUser }),
-		...(userId && { userId })
-	})
+
+	const [currentPagination, setCurrentPagination] =
+		useState<VideosPaginationParams>({
+			page: 1,
+			perPage: 20,
+			...(forUser && { forUser }),
+			...(userId && { userId })
+		})
+
+	const { data, isFetching } = useGetVideosQuery(currentPagination)
 	const [updatingVideo, setUpdatingVideo] = useState(false)
 
 	const onVideoUpdated = (success?: boolean) => {
@@ -41,36 +54,47 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 	}
 
 	return (
-		<Grid
-			container
-			spacing={3}
-			sx={{ mt: 0, pb: 3, justifyItems: 'flex-start' }}
-		>
+		<Grid container sx={{ mt: 0, py: 3, justifyItems: 'flex-start' }}>
 			{(isFetching || updatingVideo) &&
 				Array.from(Array(12).keys()).map((i, index) => (
 					<Grid key={`skeleton-${index}`} item xs={12} md={4} lg={3}>
 						<VideoListItemPlaceholder />
 					</Grid>
 				))}
-			{!isFetching &&
-				!updatingVideo &&
-				data &&
-				data.items.map((video: Video) => (
-					<Grid key={video.id} item xs={12} md={4} lg={3}>
-						<VideoListItem
-							onVideoUpdated={onVideoUpdated}
-							editable={user && user.id == userId ? true : false}
-							video={video}
+			{!isFetching && !updatingVideo && data && (
+				<Grid container xs={12} spacing={3}>
+					{data.items.length == 0 && (
+						<Grid item xs={12}>
+							<Typography variant="h5" align="center">
+								No videos found
+							</Typography>
+						</Grid>
+					)}
+					{data.items.map((video: Video) => (
+						<Grid key={video.id} item xs={12} md={4} lg={3}>
+							<VideoListItem
+								onVideoUpdated={onVideoUpdated}
+								editable={user && user.id == userId ? true : false}
+								video={video}
+							/>
+						</Grid>
+					))}
+					<Grid container xs={12} sx={{ justifyContent: 'center' }}>
+						<Pagination
+							sx={{ justifyContent: 'center', pt: 3 }}
+							onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+								setCurrentPagination({
+									...currentPagination,
+									page
+								})
+							}}
+							shape="rounded"
+							count={data.totalPages}
+							page={data.page || 1}
+							showFirstButton
+							showLastButton
 						/>
 					</Grid>
-				))}
-
-			{!isFetching && !updatingVideo && data && data.items.length == 0 && (
-				<Grid item xs={12}>
-					{' '}
-					<Typography variant="h5" align="center">
-						No vidoes found
-					</Typography>
 				</Grid>
 			)}
 
