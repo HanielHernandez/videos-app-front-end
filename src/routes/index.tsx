@@ -5,7 +5,8 @@ import { Videos } from '../views/videos/Index'
 import { authRoutes } from './auth'
 import { RequiresAuth, RequiresNoAuth } from './guards/RequiresAuth'
 import { videosRoutes } from './videos'
-
+import { MyProfile } from '../views/Me'
+import { Id } from '../views/creators/Id'
 export const routes = [
 	{
 		path: 'auth',
@@ -25,7 +26,23 @@ export const routes = [
 			</RequiresAuth>
 		)
 	},
+	{
+		path: '/me',
+		element: (
+			<RequiresAuth>
+				<MyProfile />
+			</RequiresAuth>
+		)
+	},
 
+	{
+		path: '/creators/:id',
+		element: (
+			<RequiresAuth>
+				<Id />
+			</RequiresAuth>
+		)
+	},
 	{
 		path: '/',
 		element: (

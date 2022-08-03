@@ -16,7 +16,7 @@ import { Video } from '../models'
 import { getDaysFromNow } from '../utils'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import CreateIcon from '@mui/icons-material/Create'
-
+import PublishIcon from '@mui/icons-material/Publish'
 import React from 'react'
 import { usePublishVideoMutation } from '../features/videos.slice'
 interface Props {
@@ -122,7 +122,9 @@ export const VideoListItem: FC<Props> = ({
 											<ListItemIcon>
 												<CreateIcon color="primary" fontSize="small" />
 											</ListItemIcon>
-											<Typography variant="inherit"> Edit video</Typography>
+											<Typography color="primary" variant="inherit">
+												Edit video
+											</Typography>
 										</MenuItem>
 									</Link>
 									{video.published == false && (
@@ -132,7 +134,9 @@ export const VideoListItem: FC<Props> = ({
 												handlePublishVideo(video.id)
 											}}
 										>
-											<ListItemIcon></ListItemIcon>
+											<ListItemIcon>
+												<PublishIcon />
+											</ListItemIcon>
 											<Typography variant="inherit">Publish Video</Typography>
 										</MenuItem>
 									)}

@@ -14,7 +14,7 @@ export const VideoList: FC<Props> = ({ userId }) => {
 	const { snackbarState, setSnackBarState } = useSnackBar()
 	const { data, isFetching } = useGetVideosQuery({
 		page: 1,
-		perPage: 10,
+		perPage: 20,
 		...(userId && { userId })
 	})
 	const [updatingVideo, setUpdatingVideo] = useState(false)
@@ -38,7 +38,11 @@ export const VideoList: FC<Props> = ({ userId }) => {
 	}
 
 	return (
-		<Grid container spacing={3} sx={{ mt: 0, justifyItems: 'flex-start' }}>
+		<Grid
+			container
+			spacing={3}
+			sx={{ mt: 0, pb: 3, justifyItems: 'flex-start' }}
+		>
 			{(isFetching || updatingVideo) &&
 				Array.from(Array(12).keys()).map((i, index) => (
 					<Grid key={`skeleton-${index}`} item xs={12} md={4} lg={3}>

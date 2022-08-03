@@ -29,10 +29,7 @@ const theme = createTheme({
 			main: blue[600],
 			contrastText: '#fff'
 		},
-		secondary: {
-			main: '#fff',
-			contrastText: blue[600]
-		},
+
 		error: {
 			main: red.A400
 		}

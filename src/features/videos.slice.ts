@@ -80,6 +80,12 @@ export const videosApiSlice = createApi({
 			}),
 			invalidatesTags: ['videos']
 		}),
+		likeVideo: builder.mutation<Video, number>({
+			query: (id) => ({
+				url: `/videos/${id}/like`,
+				method: 'POST'
+			})
+		}),
 		updateVideo: builder.mutation<Video, UpdateVideoValues>({
 			query: (updateValues) => ({
 				url: `/videos/${updateValues.id}`,
@@ -95,5 +101,6 @@ export const {
 	useUpdateVideoMutation,
 	useCreateVideoMutation,
 	usePublishVideoMutation,
+	useLikeVideoMutation,
 	useGetVideoQuery
 } = videosApiSlice

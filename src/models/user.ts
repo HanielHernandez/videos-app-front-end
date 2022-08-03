@@ -5,4 +5,6 @@ export interface User extends AuthSignUpRequest {
 	photoURL: string
 	createdAt: string
 	updatedAt: string
+	subscribed: null | object
+	followers: number
 }
