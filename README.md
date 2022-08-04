@@ -2,7 +2,7 @@
 
 ## About the app
 
-this app was created by using vite, react, redux toolkit, the MUI component library.
+This app was created by using vite, react, redux toolkit, the MUI component library.
 
 ## How to run
 in order to run the app first you must start it by runing 
