@@ -10,8 +10,13 @@ import {
 	MenuItem,
 	Divider
 } from '@mui/material'
-import { FC, useMemo, useRef, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import React, { FC, useMemo, useRef, useState } from 'react'
+import {
+	createSearchParams,
+	Link,
+	NavLink,
+	useNavigate
+} from 'react-router-dom'
 import { SETTINGS } from '../constants/settings.constants'
 import { useAuth } from '../hooks/use.auth'
 import { AVATAR_API_URL } from '../services/constants'
@@ -22,8 +27,8 @@ interface Props {
 	handleDrawerToggle: () => void
 }
 export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
+	const navigate = useNavigate()
 	const { user, signOut } = useAuth()
-
 	const userAvatar = useRef(null)
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -42,11 +47,14 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 		[user]
 	)
 
+	const [search, setSearch] = useState('')
+
 	const onSearchFormSubmit = (event: React.FormEvent) => {
-		//navigate(`/videos?${values.search}`)
+		event.preventDefault()
+		if (search != '')
+			navigate('/videos?' + createSearchParams({ search }).toString())
 	}
 
-	const navigate = useNavigate()
 	return (
 		<AppBar
 			sx={{ boxShadow: 0, zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -81,10 +89,13 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 							<SearchContainer>
 								<SearchInput
 									type="search"
+									name="search"
+									value={search}
+									onChange={(event) => setSearch(event.target.value)}
 									placeholder="Search Videos"
 									id="search"
 								/>
-								<SearchButton type="sumit"> Search</SearchButton>
+								<SearchButton type="submit"> Search</SearchButton>
 							</SearchContainer>
 						</form>
 					</Grid>

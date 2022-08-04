@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab'
 import { Avatar, Card, CardHeader, Typography } from '@mui/material'
 import { FC, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import {
 	userCardConf,
 	videoUserCardConf
@@ -55,7 +56,14 @@ export const UserProfile: FC<Props> = ({
 				sx={{
 					px: headerPadding
 				}}
-				avatar={<Avatar sx={avatarSize} src={user.photoURL} />}
+				avatar={
+					<Avatar
+						component={Link}
+						to={`/creators/${user.id}`}
+						sx={avatarSize}
+						src={user.photoURL}
+					/>
+				}
 				title={
 					<Typography
 						variant={titleVariation}

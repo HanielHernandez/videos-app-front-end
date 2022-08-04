@@ -23,6 +23,10 @@ const converParamsQueryString = (params: VideosPaginationParams) => {
 		queryString += `&forUser=${params.forUser}`
 	}
 
+	if (params.search) {
+		queryString += `&search=${params.search}`
+	}
+
 	if (params.orderBy) {
 		if (params.orderBy.field)
 			queryString += `&orderByField=${params.orderBy.field}`
@@ -50,7 +54,7 @@ export const videosApiSlice = createApi({
 		getVideos: builder.query<PaginationResponse<Video>, VideosPaginationParams>(
 			{
 				query: (paramsPagiantion) => {
-					return `${VIDEOS_ENDPOINT_URL}/${converParamsQueryString(
+					return `${VIDEOS_ENDPOINT_URL}${converParamsQueryString(
 						paramsPagiantion
 					)}`
 				},

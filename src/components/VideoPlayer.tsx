@@ -13,8 +13,9 @@ import { Video } from '../models'
 import { getDaysFromNow } from '../utils'
 import { CustomVideoPlayer } from './VideoPlayer.style'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp'
-import { useLikeVideoMutation } from '../features'
+import { useGetUserQuery, useLikeVideoMutation } from '../features'
 import { UserProfile } from './UserProfile'
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 interface Props {
 	video: Video
 	onVideoLiked: () => void
@@ -37,6 +38,11 @@ export const VideoPlayer: FC<Props> = ({ video, onVideoLiked }: Props) => {
 			console.error(e)
 		}
 	}
+	const {
+		data: publisher,
+		isLoading: isLoadingUser,
+		refetch: refetchUser
+	} = useGetUserQuery(video == undefined ? skipToken : video.publishedById)
 
 	return (
 		<Grid container spacing={0} direction="column">
@@ -82,12 +88,13 @@ export const VideoPlayer: FC<Props> = ({ video, onVideoLiked }: Props) => {
 					/>
 					<CardContent>
 						<Divider />
-
-						<UserProfile
-							isForVideo
-							user={video.publishedBy}
-							onSubscribed={() => onVideoLiked()}
-						/>
+						{publisher && (
+							<UserProfile
+								isForVideo
+								user={publisher}
+								onSubscribed={() => refetchUser()}
+							/>
+						)}
 
 						<Typography variant="body1">{video.description}</Typography>
 					</CardContent>

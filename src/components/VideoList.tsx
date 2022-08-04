@@ -7,7 +7,8 @@ import {
 	Pagination,
 	Stack
 } from '@mui/material'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useGetVideosQuery } from '../features/videos.slice'
 import { useSnackBar } from '../hooks/use-snack-bar'
 import { useAuth } from '../hooks/use.auth'
@@ -23,11 +24,14 @@ interface Props {
 export const VideoList: FC<Props> = ({ userId, forUser }) => {
 	const { user } = useAuth()
 	const { snackbarState, setSnackBarState } = useSnackBar()
-
+	const [queryParams] = useSearchParams()
 	const [currentPagination, setCurrentPagination] =
 		useState<VideosPaginationParams>({
 			page: 1,
 			perPage: 20,
+			...(queryParams.get('search') != null && {
+				search: queryParams.get('search') || undefined
+			}),
 			...(forUser && { forUser }),
 			...(userId && { userId })
 		})
@@ -53,6 +57,21 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 		}
 	}
 
+	useEffect(() => {
+		if (queryParams.get('search') != null && queryParams.get('search') != '') {
+			setCurrentPagination({
+				...currentPagination,
+				page: 1,
+				search: queryParams.get('search') as string
+			})
+		} else {
+			setCurrentPagination({
+				...currentPagination,
+				page: 1
+			})
+		}
+	}, [queryParams])
+
 	return (
 		<Grid container sx={{ mt: 0, py: 3, justifyItems: 'flex-start' }}>
 			{(isFetching || updatingVideo) && (
@@ -65,7 +84,7 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 				</Grid>
 			)}
 			{!isFetching && !updatingVideo && data && (
-				<Grid container xs={12} spacing={3}>
+				<Grid container item xs={12} spacing={3}>
 					{data.items.length == 0 && (
 						<Grid item xs={12}>
 							<Typography variant="h5" align="center">
@@ -82,7 +101,7 @@ export const VideoList: FC<Props> = ({ userId, forUser }) => {
 							/>
 						</Grid>
 					))}
-					<Grid container xs={12} sx={{ justifyContent: 'center' }}>
+					<Grid container item xs={12} sx={{ justifyContent: 'center' }}>
 						<Pagination
 							sx={{ justifyContent: 'center', pt: 3 }}
 							onChange={(event: React.ChangeEvent<unknown>, page: number) => {

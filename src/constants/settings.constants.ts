@@ -24,16 +24,18 @@ export const videoUserCardConf = {
 	cardVariant: undefined,
 	headerPadding: 0,
 	titleVariation: 'body1',
-	subHeaderVariation: 'body2'
+	subHeaderVariation: 'body2',
+	padding: 0
 }
 
 export const userCardConf = {
+	padding: 4,
 	avatarSize: {
 		width: 48,
 		height: 48
 	},
 	cardVariant: undefined,
-	headerPadding: 0,
+	headerPadding: 2,
 	titleVariation: 'h6',
 	subHeaderVariation: 'subtitle2'
 }
