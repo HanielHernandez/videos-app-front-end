@@ -6,10 +6,10 @@ export const Auth = () => {
 	return (
 		<DefaultLayout>
 			<Grid
-				container
 				sx={{
-					height: '100%'
+					pt: 4
 				}}
+				container
 				direction="row"
 				justifyContent="center"
 				alignItems="center"

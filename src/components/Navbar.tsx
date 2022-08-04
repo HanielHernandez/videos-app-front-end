@@ -84,21 +84,24 @@ export const Navbar: FC<Props> = ({ handleDrawerToggle }) => {
 							</Typography>
 						</Link>
 					</Grid>
-					<Grid item md={4} sx={{ display: { md: 'flex', xs: 'none' } }}>
-						<form onSubmit={onSearchFormSubmit} style={{ width: '100%' }}>
-							<SearchContainer>
-								<SearchInput
-									type="search"
-									name="search"
-									value={search}
-									onChange={(event) => setSearch(event.target.value)}
-									placeholder="Search Videos"
-									id="search"
-								/>
-								<SearchButton type="submit"> Search</SearchButton>
-							</SearchContainer>
-						</form>
-					</Grid>
+
+					{user != null && (
+						<Grid item md={4} sx={{ display: { md: 'flex', xs: 'none' } }}>
+							<form onSubmit={onSearchFormSubmit} style={{ width: '100%' }}>
+								<SearchContainer>
+									<SearchInput
+										type="search"
+										name="search"
+										value={search}
+										onChange={(event) => setSearch(event.target.value)}
+										placeholder="Search Videos"
+										id="search"
+									/>
+									<SearchButton type="submit"> Search</SearchButton>
+								</SearchContainer>
+							</form>
+						</Grid>
+					)}
 
 					{user != null ? (
 						<Grid item>
